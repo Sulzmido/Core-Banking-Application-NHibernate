@@ -1,0 +1,37 @@
+﻿@model IEnumerable<MyCBA.Core.Models.Role>
+@{
+    ViewBag.Title = "Index";
+}
+<div id="wrapper">
+@Html.Partial("_SideBarMultiLevelDropdown")
+    <div id="page-wrapper">
+
+        <h2 class="text-center">Roles</h2>
+        <p>
+            @Html.ActionLink("Create New", "Create")
+        </p>
+        <table class="table">
+            <tr>
+                <th>S/N</th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th></th>
+            </tr>
+            @{int count = 1;}
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@count</td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ID })
+                    </td>
+                </tr>
+                count++;
+            }
+        </table>
+    </div>
+</div>

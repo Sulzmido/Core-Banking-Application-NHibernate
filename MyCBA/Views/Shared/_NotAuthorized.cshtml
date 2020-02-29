@@ -1,0 +1,10 @@
+﻿@{ 
+    Layout = null;
+    //ViewBag.Title = "Access denied";
+}
+
+<h3>You are not authorized to perform this action.</h3>
+
+<div>
+    @Html.ActionLink("Log in", "login", "UserManager", new { @class = "col-md-4"})
+</div>

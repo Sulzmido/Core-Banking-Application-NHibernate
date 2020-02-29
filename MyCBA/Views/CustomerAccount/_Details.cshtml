@@ -1,0 +1,55 @@
+﻿@model MyCBA.Core.Models.CustomerAccount
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h4 class="modal-title" id="myModalLabel">Account Details</h4>
+</div>
+<div>
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer.FullName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Customer.FullName)
+        </dd>
+        <dt>
+            Account Number
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AccountNumber)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AccountName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AccountName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AccountBalance)
+        </dt>
+        <dd>
+            @*@Html.DisplayFor(model => model.AccountBalance)*@
+            N @Model.AccountBalance.ToString("N2", System.Globalization.CultureInfo.InvariantCulture)
+        </dd>
+        <dt>
+            Daily Interest Accrued
+        </dt>
+        <dd>
+            N @Model.dailyInterestAccrued.ToString("N2", System.Globalization.CultureInfo.InvariantCulture)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AccountType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AccountType)
+        </dd>
+        <dt>
+            Account Status
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AccountStatus)
+        </dd>
+    </dl>
+</div>
+
+

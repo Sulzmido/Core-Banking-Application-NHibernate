@@ -1,0 +1,71 @@
+﻿@model MyCBA.Core.ViewModels.GlViewModels.AddGlActViewModel
+@{
+    ViewBag.Title = "Create";
+}
+<div id="wrapper">
+    @Html.Partial("_SideBarMultiLevelDropdown")
+    <div id="page-wrapper">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Create new GL Account
+            </div>
+            <div class="panel-body">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                        <br />
+                        @Html.ValidationSummary(true)
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.AccountName, new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(model => model.AccountName, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.AccountName)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.BranchId, "Branch", new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownList("BranchId", null, "Select", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.BranchId)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.GlCategoryId, "Gl Category", new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownList("GlCategoryId", null, "Select", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.GlCategoryId)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Create" id="btn1" class="btn btn-default" />
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="panel-footer">
+                <div> @ViewBag.Msg</div>
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        </div>
+
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+@*<script type="text/javascript">
+        $(document).ready(function (e) {
+            $("#btn1").click()
+            {
+                alert("hi");
+            }
+
+        })
+    </script>
+*@

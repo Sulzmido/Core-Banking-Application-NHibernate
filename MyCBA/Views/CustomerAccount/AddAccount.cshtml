@@ -1,0 +1,438 @@
+﻿@model MyCBA.Core.Models.CustomerAccount
+@{
+    ViewBag.Title = "AddAccount";
+}
+
+<div id="wrapper">
+    <!-- Navigation -->
+
+     @Html.Partial("_SideBarMultiLevelDropdown")
+    <div id="page-wrapper">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Create new Account
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="form-horizontal">
+                            @Html.ValidationSummary(true)
+                            <div class="form-group">
+                                @Html.Label("Account Type", new { @class = "col-md-2 control-label" })
+                                <div id="drpAct" class="col-md-10">
+                                    @Html.DropDownList("AccountType", new List<SelectListItem>
+                                   {
+                                       new SelectListItem{Text = "Savings", Value = "Savings"},
+                                       new SelectListItem{Text = "Current", Value = "Current"},
+                                       new SelectListItem{Text = "Loan", Value = "Loan"}
+                                   }, "Select", new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.Label("Customer (ID)", new { @class = "col-md-2 control-label" })
+                                <div class="col-md-10">
+                                    @*@Html.DropDownList("CustomerId", null, "Select", new { @class = "form-control" })*@
+                                    @Html.TextBoxFor(m => m.CustId, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.CustId)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.AccountName, new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(model => model.AccountName, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.AccountName)
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.BranchId, "Branch", new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownList("BranchId", null, String.Empty, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.BranchId)
+                                </div>
+                            </div>
+
+                            <div id="loanDiv">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.LoanAmount, new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.TextBoxFor(model => model.LoanAmount, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.LoanAmount)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Rate", "Interest Rate per month", new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.TextBox("InterestRate", (string)ViewBag.LoanInterestRate, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Years", "Number of years", new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.TextBox("NumberOfYears", "0.5", new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Terms of Loan", new { @class = "col-md-2 control-label" })
+                                    <div class="col-md-10">
+                                        @Html.DropDownList("TermsOfLoan", new List<SelectListItem>
+               {
+                   new SelectListItem{Text = "Fixed", Value = "Fixed"},
+                   new SelectListItem{Text = "Reducing", Value = "Reducing"}
+               }, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Linked Account (Account Number)", new { @class = "col-md-2 control-label" })
+                                    <div class="col-md-10">
+                                        @*@Html.DropDownList("ServicingAccountId", null, "Select", new { @class = "form-control" })*@
+                                        @Html.TextBoxFor(m => m.ServicingAccountId, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.ServicingAccountId)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input id="btn" type="submit" value="Add Account" class="btn btn-default" />
+                                </div>
+                            </div>
+
+
+                        </div>
+                    }
+                </div>
+                @*
+                <div class="row">
+                    <div>
+                        <button id="btnPreviewLoan" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
+                            Preview Loan Breakdown
+                        </button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" onshow="populateLoanPreviewTable()">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                        <h4 class="modal-title" id="myModalLabel">Loan Amortization Schedule </h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <label id="loanTitle">To be changed</label>
+                                        <div id="dvTable">
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                                <!-- /.modal-content -->
+                            </div>
+                            <!-- /.modal-dialog -->
+                        </div>
+                        <!-- /.modal -->
+                    </div>
+
+                </div>
+                    *@
+            </div>
+            <div class="panel-footer">
+                @ViewBag.Msg
+            </div>
+        </div>
+
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script type="text/javascript">
+
+
+    debugger;
+    function disableLoanEntry() {
+        document.getElementById("LoanAmount").disabled = true;
+        document.getElementById("TermsOfLoan").disabled = true;
+        document.getElementById("ServicingAccountId").disabled = true;
+        $("#loanDiv").hide();
+        $("#btnPreviewLoan").hide();
+    }//end dunction
+    window.onload = disableLoanEntry;       //disables the input fileds for loan entry
+
+
+    var animate;
+    //animate = setInterval(updateTimeDisplay, 1000); // call updateTimeDisplay in 1000msec
+
+    var k = 0;
+    function updateTimeDisplay() {
+        /*
+        var now = new Date();      //returns today's date and time|
+        var fut = new Date();
+        fut.setFullYear(now.getFullYear());
+        fut.setMonth(now.getMonth());
+        fut.setDate(now.getDate());
+        fut.setHours(23);           //setting the deadline to 23:59:00
+        fut.setMinutes(59);
+        fut.setSeconds(0);
+
+        var op = "00:00:00";
+        var diff = (fut.getTime() - now.getTime()) / 1000;    //in seconds
+        if (diff > 0) {
+            var x = diff / 3600;
+            var hr = Math.floor(x)
+            var rem1 = (x - hr) * 60;
+            var mi = Math.floor(rem1);
+            var sec = Math.floor((rem1 - mi) * 60);
+
+            op = hr + ":" + mi + ":" + sec;
+        }
+        var disp = document.getElementById("btn");
+        disp.value = op;
+        */
+
+        //debugger;
+        //algorithm 2
+        var hr = 0, mr = 0, sr = 0;
+        var totalSec = 0;
+        var dh = 13, dm = 30, ds = 23;
+        var now = new Date();
+        var h = now.getHours(), m = now.getMinutes(), s = now.getSeconds();
+
+        if (h == dh) {
+            hr = 0; mr = (dm - m - 1); sr = (60 - s + ds);
+        }
+        else if (h < dh) {
+            hr = (dh - h - 1); mr = (60 - m + dm - 1); sr = (60 - s + ds);
+        }
+        else {
+            hr = 0; mr = 0; sr = 0;
+        }
+        totalSec = (hr * 3600) + (mr * 60) + sr;
+
+        var op = "00:00:00";
+        if (totalSec > 0) {
+            var x = totalSec / 3600;
+            var hh = Math.floor(x)
+            var rem1 = (x - hr) * 60;
+            var mm = Math.floor(rem1);
+            var ss = Math.floor((rem1 - mm) * 60);
+
+            op = hh + ":" + mm + ":" + ss;
+        }
+        var disp = document.getElementById("btn");
+        disp.value = op;
+    }
+
+    function populateLoanPreviewTable() {
+        debugger;
+        var loanAmount = Number(document.getElementById("LoanAmount").value);
+        var interestRate = Number(document.getElementById("InterestRate").value);
+        var numberOfYears = Number(document.getElementById("NumberOfYears").value);
+        var loanTerms = document.getElementById("TermsOfLoan").value;
+
+        if (loanTerms == "Fixed") {
+            //Create a HTML Table element.
+            var table = $("<table />");
+            table[0].border = "1";
+
+
+            //Get the count of columns.
+            var columnCount = 5;
+
+            //Add the header row.
+            var row = $(table[0].insertRow(-1));
+            var headerCell1 = $("<th />"); headerCell1.html("Month"); row.append(headerCell1);
+            var headerCell2 = $("<th />"); headerCell2.html("Installmental Payment"); row.append(headerCell2);
+            var headerCell3 = $("<th />"); headerCell3.html("Principal Owning"); row.append(headerCell3);
+            var headerCell4 = $("<th />"); headerCell4.html("Monthly Interest"); row.append(headerCell4);
+            var headerCell5 = $("<th />"); headerCell5.html("Monthly Principal"); row.append(headerCell5);
+
+
+
+            var totalInterest = loanAmount * interestRate * 12 * numberOfYears;
+            var allTotal = Number(totalInterest) + Number(loanAmount);
+            var nmonths = Number(12 * numberOfYears);
+            var principalOwing = Number(loanAmount);
+            var monthlyPrincipal = Number(loanAmount / nmonths);
+            var monthlyInterest = Number(totalInterest / nmonths);
+            //Add the data rows
+            for (var i = 0; i <= (nmonths) ; i++) {
+                row = $(table[0].insertRow(-1));
+
+                var cell1 = $("<td />"); cell1.html(i); row.append(cell1);
+                var cell2 = $("<td />"); cell2.html((allTotal / nmonths).toFixed(2)); row.append(cell2);
+                var cell3 = $("<td />"); cell3.html(principalOwing.toFixed(2)); row.append(cell3);
+                var cell4 = $("<td />"); cell4.html(monthlyInterest.toFixed(2)); row.append(cell4);
+                var cell5 = $("<td />"); cell5.html(monthlyPrincipal.toFixed(2)); row.append(cell5);
+
+                principalOwing -= monthlyPrincipal;
+            }
+
+            var dvTable = $("#dvTable");
+            dvTable.html("");
+            dvTable.append(table);
+
+            var label = document.getElementById("loanTitle");
+            label.innerHTML = "N" + loanAmount + " borrowed at a monthly interest rate of " + interestRate + " to be repayed over " + nmonths + " months with Terms of Loan as Fixed";
+        }
+        else if (loanTerms = "Reducing") {
+            //dvTable.remove(table);
+            //Create a HTML Table element.
+            var table = $("<table />");
+            table[0].border = "1";
+
+
+            //Get the count of columns.
+            var columnCount = 5;
+
+            //Add the header row.
+            var row = $(table[0].insertRow(-1));
+            var headerCell1 = $("<th />"); headerCell1.html("Month"); row.append(headerCell1);
+            var headerCell2 = $("<th />"); headerCell2.html("Installmental Payment"); row.append(headerCell2);
+            var headerCell3 = $("<th />"); headerCell3.html("Principal Owning"); row.append(headerCell3);
+            var headerCell4 = $("<th />"); headerCell4.html("Monthly Interest"); row.append(headerCell4);
+            var headerCell5 = $("<th />"); headerCell5.html("Monthly Principal"); row.append(headerCell5);
+
+
+            var totalInterest = loanAmount * interestRate * 12 * numberOfYears;
+            var allTotal = Number(totalInterest) + Number(loanAmount);
+            var nmonths = Number(12 * numberOfYears);
+            var principalOwing = loanAmount;
+            var monthlyPrincipal = 0;
+            var monthlyInterest = 0;
+
+
+            var x = 1 - Math.pow((1 + interestRate), -(nmonths));
+            var LoanMonthlyRepay = (loanAmount * interestRate) / x;
+
+            //Add the data rows
+            for (var i = 0; i <= (nmonths) ; i++) {
+                row = $(table[0].insertRow(-1));
+
+                var cell1 = $("<td />"); cell1.html(i); row.append(cell1);
+                var cell2 = $("<td />"); cell2.html((LoanMonthlyRepay).toFixed(2)); row.append(cell2);
+                var cell3 = $("<td />"); cell3.html(principalOwing.toFixed(2)); row.append(cell3);
+                var cell4 = $("<td />"); cell4.html(monthlyInterest.toFixed(2)); row.append(cell4);
+                var cell5 = $("<td />"); cell5.html(monthlyPrincipal.toFixed(2)); row.append(cell5);
+
+                monthlyInterest = interestRate * principalOwing;
+                monthlyPrincipal = LoanMonthlyRepay - monthlyInterest;
+                principalOwing -= monthlyPrincipal;
+            }
+
+            var dvTable = $("#dvTable");
+            dvTable.html("");
+            dvTable.append(table);
+
+            var label = document.getElementById("loanTitle");
+            label.innerHTML = "N" + loanAmount + " borrowed at a monthly interest rate of " + interestRate + " to be repayed over " + nmonths + " months using Reducing Balance as the Terms of Loan";
+        }
+
+
+    }
+
+
+
+
+    $(document).ready(function () {
+
+        $("#btn").on("click", function (e) {
+            //var tex = $("#btn").val();
+            //alert(tex);
+
+
+            var remHr = 0, remMin = 0, remSec = 0;  //rem=remaining
+            var setHr = 10, setMin = 12, setSec = 0;
+
+            //get the setTime in ms
+            //convert to hr:min:sec
+
+            var now = new Date();      //returns today's date and time| no o
+            var fut = new Date();
+            fut.setFullYear(now.getFullYear());
+            fut.setMonth(now.getMonth());
+            fut.setDate(now.getDate());
+            fut.setHours(23);
+            fut.setMinutes(59);
+            fut.setSeconds(0);
+
+            var diff = (fut.getTime() - now.getTime()) / 1000;    //in seconds
+            if (diff > 0) {
+                var x = diff / 3600;
+                var hr = Math.floor(x)
+                var rem1 = (x - hr) * 60;
+                var mi = Math.floor(rem1);
+                var sec = Math.floor((rem1 - mi) * 60);
+
+                var op = hr + ":" + mi + ":" + sec;
+                //alert(op);
+            }
+
+
+            //var displayDate = Date();
+            //alert("Date and Time : " + now);
+            //alert("Date and Time : " + now.getTime());
+            //alert("Date and Time : " + now.toLocaleTimeString());
+            //alert("Date and Time : " + fut.getTime());
+            //alert("Date and Time : " + fut.toTimeString());
+
+        });
+
+        //handling
+        $("#AccountType").on("change", function (e) {
+            var actType = $("#AccountType").val();
+            if (actType == "Loan") {
+                document.getElementById("LoanAmount").disabled = false;
+                document.getElementById("TermsOfLoan").disabled = false;
+                document.getElementById("ServicingAccountId").disabled = false;
+                $("#loanDiv").show();
+                $("#btnPreviewLoan").show();
+
+            }
+            else {
+                document.getElementById("LoanAmount").disabled = true;
+                document.getElementById("TermsOfLoan").disabled = true;
+                document.getElementById("ServicingAccountId").disabled = true;
+                $("#loanDiv").hide();
+                $("#btnPreviewLoan").hide();
+            }
+        });
+
+        $("#lll").on("click", function (e) {
+            var now = Date();       //returns today's date and time
+            document.write("Date and Time : " + now);
+        });
+
+
+
+        //TOGGLE
+        $(function () {
+            // run the currently selected effect
+            function runEffect() {
+                // get effect type from
+                //var selectedEffect = $("#effectTypes").val();
+                var selectedEffect = "Blind";
+                // Most effect types need no options passed by default
+                var options = {};
+                // some effects have required parameters
+                if (selectedEffect === "scale") {
+                    options = { percent: 50 };
+                } else if (selectedEffect === "size") {
+                    options = { to: { width: 200, height: 60 } };
+                }
+
+                // Run the effect
+                $("#effect").toggle(selectedEffect, options, 500);
+            };
+
+            // Set effect from select menu value
+            $("#button").on("click", function () {
+                runEffect();
+            });
+        });
+
+    });
+
+
+</script>

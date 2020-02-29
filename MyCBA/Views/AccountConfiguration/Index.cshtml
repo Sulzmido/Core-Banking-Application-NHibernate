@@ -1,0 +1,153 @@
+﻿@model MyCBA.Core.Models.AccountConfiguration
+@{
+    ViewBag.Title = "Details";
+}
+<div id="wrapper">
+
+   @Html.Partial("_SideBarMultiLevelDropdown")
+    <div id="page-wrapper">
+        <p>@ViewBag.Msg</p>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Account Configurations
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs">
+                    <li class="">
+                        <a href="#home" data-toggle="tab" aria-expanded="false">Savings Account Configuration</a>
+                    </li>
+                    <li class="active">
+                        <a href="#profile" data-toggle="tab" aria-expanded="true">Current Account Configuration</a>
+                    </li>
+                    <li class="">
+                        <a href="#messages" data-toggle="tab" aria-expanded="false">Loan Account Configuration</a>
+                    </li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div class="tab-pane fade " id="home">
+                        <table class="table">
+                            <tr>
+                                <td>Savings Interest Rate:</td>
+                                <td>@Html.DisplayFor(model => model.SavingsCreditInterestRate)</td>
+                            </tr>
+                            <tr>
+                                <td>Savings Minimum Balance:</td>
+                                <td> N @Model.SavingsMinimumBalance.ToString("N2", System.Globalization.CultureInfo.InvariantCulture)</td>
+                            </tr>
+                            <tr>
+                                <td>Savings Interest Expense GL:</td>
+                                @if (Model.SavingsInterestExpenseGl != null)
+                                {
+                                    <td>@Html.DisplayFor(model => model.SavingsInterestExpenseGl.AccountName) </td>
+                                }
+                                else
+                                {
+                                    <td>Nil</td>
+                                }
+                            </tr>
+                            <tr>
+                                <td>Savings Interest Payable GL:</td>
+                                @if (Model.SavingsInterestExpenseGl != null)
+                                {
+                                    <td>@Html.DisplayFor(model => model.SavingsInterestPayableGl.AccountName) </td>
+                                }
+                                else
+                                {
+                                    <td>Nil</td>
+                                }
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="tab-pane fade active in" id="profile">
+                        <table class="table">
+                            <tr>
+                                <td>Current Credit Interest Rate:</td>
+                                <td>@Html.DisplayFor(model => model.CurrentCreditInterestRate)</td>
+                            </tr>
+                            <tr>
+                                <td>Current Minimum Balance:</td>
+                                <td> N @Model.CurrentMinimumBalance.ToString("N2", System.Globalization.CultureInfo.InvariantCulture)</td>
+                            </tr>
+                            <tr>
+                                <td>Current COT:</td>
+                                <td>N @Model.CurrentCot.ToString("N2", System.Globalization.CultureInfo.InvariantCulture)</td>
+                            </tr>
+                            <tr>
+                                <td>Current Interest Expense GL:</td>
+                                @if (Model.CurrentInterestExpenseGl != null)
+                                {
+                                    <td>@Html.DisplayFor(model => model.CurrentInterestExpenseGl.AccountName) </td>
+                                }
+                                else
+                                {
+                                    <td>Nil</td>
+                                }
+                            </tr>
+                            <tr>
+                                <td>Current COT Income GL</td>
+                                @if (Model.CurrentCotIncomeGl != null)
+                                {
+                                    <td>@Html.DisplayFor(model => model.CurrentCotIncomeGl.AccountName) </td>
+                                }
+                                else
+                                {
+                                    <td>Nil</td>
+                                }
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="tab-pane fade" id="messages">
+                        <table class="table">
+                            <tr>
+                                <td>Loan Debit Interest Rate:</td>
+                                <td>@Html.DisplayFor(model => model.LoanDebitInterestRate)</td>
+                            </tr>
+                           @* <tr>
+                                <td>Loan Interest Expense GL</td>
+                                @if (Model.LoanInterestExpenseGl != null)
+                                {
+                                    <td>@Html.DisplayFor(model => model.LoanInterestExpenseGl.AccountName) </td>
+                                }
+                                else
+                                {
+                                    <td>Nil</td>
+                                }
+                            </tr>
+                            *@
+                            <tr>
+                                <td>Loan Interest Income GL</td>
+                                @if (Model.LoanInterestIncomeGl != null)
+                                {
+                                    <td>@Html.DisplayFor(model => model.LoanInterestIncomeGl.AccountName) </td>
+                                }
+                                else
+                                {
+                                    <td>Nil</td>
+                                }
+                            </tr>
+                            <tr>
+                                <td>Loan Interest Receivable GL</td>
+                                @if (Model.LoanInterestReceivableGl != null)
+                                {
+                                    <td>@Html.DisplayFor(model => model.LoanInterestReceivableGl.AccountName) </td>
+                                }
+                                else
+                                {
+                                    <td>Nil</td>
+                                }
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.ID })
+        </p>
+    </div>
+</div>

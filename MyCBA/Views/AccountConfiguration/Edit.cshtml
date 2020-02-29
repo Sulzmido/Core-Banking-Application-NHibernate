@@ -1,0 +1,164 @@
+﻿@model MyCBA.Core.Models.AccountConfiguration
+@{
+    ViewBag.Title = "Edit";
+}
+<br />
+<div id="wrapper">
+    <!-- Navigation -->
+
+ @Html.Partial("_SideBarMultiLevelDropdown")
+    <div id="page-wrapper">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Account Configuration
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs">
+                    <li class="">
+                        <a href="#Savings" data-toggle="tab" aria-expanded="false">Savings Config</a>
+                    </li>
+                    <li class="active">
+                        <a href="#profile" data-toggle="tab" aria-expanded="true">Current Config</a>
+                    </li>
+                    <li class="">
+                        <a href="#messages" data-toggle="tab" aria-expanded="false">Loan Config</a>
+                    </li>
+                </ul>
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                        @Html.ValidationSummary(true)
+                        @Html.HiddenFor(model => model.ID)
+                        @Html.HiddenFor(model => model.FinancialDate)
+                        @Html.HiddenFor(model => model.IsBusinessOpen)
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <br />
+                            <div class="tab-pane fade" id="Savings">
+                                <div class="form-group">
+                                    @Html.Label("Credit Interest Rate", new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.TextBoxFor(model => model.SavingsCreditInterestRate, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.SavingsCreditInterestRate)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Minimum Balance", new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.TextBoxFor(model => model.SavingsMinimumBalance, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.SavingsMinimumBalance)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Interest Expense Gl", new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.DropDownList("SavingsInterestExpenseGl_GlAccountId", null, "Select", new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.SavingsInterestExpenseGl)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("InterestPayableGl", "Interest Payable Gl", new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.DropDownList("SavingsInterestPayableGl_Id", null, "Select", new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.SavingsInterestPayableGl)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade active in" id="profile">
+                                <div class="form-group">
+                                    @Html.Label("Credit Interest Rate", new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.TextBoxFor(model => model.CurrentCreditInterestRate, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.CurrentCreditInterestRate)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Minimum Balance", new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.TextBoxFor(model => model.CurrentMinimumBalance, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.CurrentMinimumBalance)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("COT", new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.TextBoxFor(model => model.CurrentCot, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.CurrentCot)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("InterestExpenseGl", "Interest Expense Gl", new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.DropDownList("CurrentIntExpGlId", null, "Select", new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.CurrentInterestExpenseGl)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Cot Income Gl", "Cot Income Gl", new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.DropDownList("CurrentCotIncGlId", null, "Select", new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.CurrentCotIncomeGl)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="messages">
+                                <div class="form-group">
+                                    @Html.Label("Debit Interest Rate", new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.TextBoxFor(model => model.LoanDebitInterestRate, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.LoanDebitInterestRate)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.LoanInterestIncomeGl, "Interest Income Gl", new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.DropDownList("LoanIntIncomeGlId", null, "Select", new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.LoanInterestIncomeGl)
+                                    </div>
+                                </div>
+                                @*
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.LoanInterestExpenseGl, "Interest Expense Gl", new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.DropDownList("LoanIntExpGlId", null, "Select", new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.LoanInterestExpenseGl)
+                                    </div>
+                                </div>
+                                    *@
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.LoanInterestReceivableGl, "Interest Receivable Gl", new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.DropDownList("LoanInterestReceivableGl_Id", null, "Select", new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.LoanInterestReceivableGl)
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="Save" class="btn btn-default btn-block" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <!-- /.panel-body -->
+            <div class="panel-footer">
+                @Html.ActionLink("Back to Details", "Index")
+            </div>
+        </div>
+        <!-- /.panel -->
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

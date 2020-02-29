@@ -1,0 +1,76 @@
+﻿@model IEnumerable<MyCBA.Core.ViewModels.FinancialReportViewModel.TrialBalanceViewModel>
+@{
+    ViewBag.Title = "TrialBalance";
+}
+<div id="wrapper">
+    <!-- Navigation -->
+
+   @Html.Partial("_SideBarMultiLevelDropdown")
+    <div id="page-wrapper">
+        <h2 class="text-center text-primary">Trial Balance</h2>
+        @using (Html.BeginForm())
+        {
+            <p class="text-center">
+                From: <input type="date" name="date1" /> To: <input type="date" name="date2" />
+                <input type="submit" value="Load" />
+            </p>
+        }
+
+        <br />
+        <table class="table table-bordered">
+            <tr>
+                <th>
+                    Category
+                </th>
+                <th>
+                    Sub Category
+                </th>
+                <th>
+                    Account Name
+                </th>
+                <th>
+                    Dr
+                </th>
+                <th>
+                    Cr
+                </th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MainCategory)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SubCategory)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AccountName)
+                    </td>
+                    <td>
+                        N @item.TotalDebit.ToString("N2", System.Globalization.CultureInfo.InvariantCulture)
+                    </td>
+                    <td>
+                        N @item.TotalCredit.ToString("N2", System.Globalization.CultureInfo.InvariantCulture)
+                    </td>
+                </tr>
+            }
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr>
+                <th>Total</th>
+                <th></th>
+                <th></th>
+                <th>N @ViewBag.TotalDebit.ToString("N2", System.Globalization.CultureInfo.InvariantCulture)</th>
+                <th>N @ViewBag.TotalCredit.ToString("N2", System.Globalization.CultureInfo.InvariantCulture) </th>
+            </tr>
+
+        </table>
+    </div>
+
+</div>

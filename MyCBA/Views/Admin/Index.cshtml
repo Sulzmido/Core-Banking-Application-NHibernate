@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+<h2>Welcome, Dear Admin</h2>
+
+<div id="wrapper">
+    <!-- Navigation -->
+
+   @Html.Partial("_SideBarMultiLevelDropdown")
+    <div id="page-wrapper">
+        @using (Html.BeginForm())
+        {
+            <p>@ViewBag.Msg</p>
+
+            MyCBA.Logic.EodLogic logic = new MyCBA.Logic.EodLogic();
+            var config = new MyCBA.Data.Repositories.ConfigurationRepository().GetFirst();
+            <p class="text-primary">Financial Date: @config.FinancialDate.ToString("D")</p>
+            if (logic.isBusinessClosed())
+            {
+                <h3 class="text-danger">Yet to be opened</h3>
+            }
+            else
+            {
+                <h3 class="text-success">Business Opened!</h3>
+            }
+
+            @Html.ActionLink(logic.isBusinessClosed() ? "Open Business" : "Close Business", "OpenOrCloseBusiness");
+        }
+    </div>
+</div>

@@ -1,0 +1,73 @@
+﻿@model IEnumerable<MyCBA.Core.Models.GlPosting>
+@{
+    ViewBag.Title = "GL POSTINGS";
+}
+<div id="wrapper">
+      @Html.Partial("_SideBarMultiLevelDropdown")
+    <div id="page-wrapper">
+        <div class="panel panel-primary">
+            <div class="panel-heading"><h4 class="text-center">GL POSTINGS</h4></div>
+            <div class="panel-body">
+                <p>
+                    @Html.ActionLink("Post", "PostTransaction")
+                </p>
+                <table class="table table-bordered" id="myTable">
+                    <thead>
+                        <tr>
+                            <th>Post ID</th>
+                            <th>
+                                Account Debitted
+                            </th>
+                            <th>
+                                Account Creditted
+                            </th>
+                            <th>
+                                Amount
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Naration)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Date)
+                            </th>
+                            <th>Post Initiator</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.ID.ToString("D5")</td>
+                                <td>
+                                    @item.DrGlAccount.AccountName -> @item.DrGlAccount.CodeNumber
+                                </td>
+                                <td>
+                                    @item.CrGlAccount.AccountName -> @item.CrGlAccount.CodeNumber
+                                </td>
+                                <td>
+                                    N @item.DebitAmount.ToString("N2", System.Globalization.CultureInfo.InvariantCulture)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Naration)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Date)
+                                </td>
+                                <td>@item.PostInitiator.Username</td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    debugger;
+    $(document).ready(function () {
+        $('#myTable').DataTable();
+    });
+</script>
+<link href="~/Scripts/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.dataTables.min.js"></script>

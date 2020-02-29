@@ -1,0 +1,137 @@
+﻿@model IEnumerable<MyCBA.Core.Models.CustomerAccount>
+@{
+    ViewBag.Title = "Index";
+}
+
+<div id="wrapper">
+    @Html.Partial("_SideBarMultiLevelDropdown")
+    <div id="page-wrapper">
+        <h3 class="text-center">
+            Customer Accounts
+        </h3>
+        <p>
+            @Html.ActionLink("Create New", "AddAccount", "customerAccount")
+        </p>
+        <!-- /.row -->
+        <div class="row">
+            <table style="width:80%" class="table table-striped table-bordered table-hover" id="myTable">
+                <thead>
+                    <tr>
+                        <th>Account ID</th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.AccountName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.AccountNumber)
+                        </th>
+                        <th>
+                            Branch
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.AccountType)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.AccountBalance)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.AccountStatus)
+                        </th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.ID.ToString("D5")</td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.AccountName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.AccountNumber)
+                            </td>
+                            @{
+                                MyCBA.Data.Repositories.BranchRepository branchRepo = new MyCBA.Data.Repositories.BranchRepository();
+                                <td>@item.Branch.Name</td>
+                            }
+                            <td>
+                                @Html.DisplayFor(modelItem => item.AccountType)
+                            </td>
+                            <td>
+                                N @item.AccountBalance.ToString("N2", System.Globalization.CultureInfo.InvariantCulture)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.AccountStatus)
+                            </td>
+                            @{
+                                if (item.AccountStatus == MyCBA.Core.Models.AccountStatus.Active)
+                                {
+                                    <td class="text-danger">@Html.ActionLink("Close Account", "ChangeAccountStatus", new { id = item.ID })</td>
+                                }
+                                else
+                                {
+                                    <td class="text-success">@Html.ActionLink("Activate Account", "ChangeAccountStatus", new { id = item.ID })</td>
+                                }
+                            }
+                            <td>
+                                @Html.ActionLink("Edit", "EditAccount", new { id = item.ID })
+                            </td>
+                            <td><a href="javascript:void(0);" class="anchorDetail" data-id="@item.ID" id="@item.ID" onclick="getAccountModal(this.id)">Details</a></td>
+                        </tr>
+                                }
+
+                </tbody>
+            </table>
+            <div id='myModal' class='modal modal-md'>
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div id='myModalContent'></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    function getAccountModal(clickedId) {
+
+        debugger;
+        var AccountDetailPostBackURL = '/CustomerAccount/Details';
+        var $buttonClicked = $(this);
+        var id = $buttonClicked.attr('data-id');
+        var options = { "backdrop": "static", keyboard: true };
+        $.ajax({
+            type: "GET",
+            url: AccountDetailPostBackURL,
+            contentType: "application/json; charset=utf-8",
+            data: { "Id": clickedId },
+            datatype: "json",
+            success: function (data) {
+                debugger;
+                $('#myModalContent').html(data);
+                $('#myModal').modal(options);
+                $('#myModal').modal('show');
+
+            },
+            error: function () {
+                alert("Dynamic content load failed.");
+            }
+        });
+    }
+
+    $("#closbtn").click(function () {
+        $('#myModal').modal('hide');
+    });
+</script>
+<script>
+    debugger;
+    $(document).ready(function () {
+        $('#myTable').DataTable();
+    });
+</script>
+<link href="~/Scripts/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.dataTables.min.js"></script>

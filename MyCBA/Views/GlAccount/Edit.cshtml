@@ -1,0 +1,57 @@
+﻿@model MyCBA.Core.ViewModels.GlViewModels.EditGlAccountViewModel
+@{
+    ViewBag.Title = "Edit";
+}
+<div id="wrapper">
+
+    @Html.Partial("_SideBarMultiLevelDropdown")
+    <div id="page-wrapper">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Edit
+            </div>
+            <div class="panel-body">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                        <h4>GlAccount</h4>
+                        <hr />
+                        @Html.ValidationSummary(true)
+                        @Html.HiddenFor(model => model.Id)
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.AccountName, new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(model => model.AccountName, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.AccountName)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.BranchId, "Branch", new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownList("BranchId", null, String.Empty, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.BranchId)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Save" class="btn btn-default btn-block" />
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="panel-footer">
+                <div>@ViewBag.Msg</div>
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

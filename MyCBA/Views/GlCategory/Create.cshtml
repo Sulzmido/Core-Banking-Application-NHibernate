@@ -1,0 +1,67 @@
+﻿@model MyCBA.Core.Models.GlCategory
+@{
+    ViewBag.Title = "Create";
+}
+<div id="wrapper">
+
+    @Html.Partial("_SideBarMultiLevelDropdown")
+    <div id="page-wrapper">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Create New Category
+            </div>
+            <div class="panel-body">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                        <hr />
+                        @Html.ValidationSummary(true)
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Name)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Description, new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(model => model.Description, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Description)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Main GL Category", new { @class = "col-md-2 control-label" })
+                            <div class="col-md-10">
+                                @Html.DropDownList("MainCategory", new List<SelectListItem>
+               {
+                   new SelectListItem{Text = "Asset", Value = "Asset"},
+                   new SelectListItem{Text = "Capital", Value = "Capital"},
+                   new SelectListItem{Text = "Expenses", Value = "Expenses"},
+                   new SelectListItem{Text = "Income", Value = "Income"},
+                   new SelectListItem{Text = "Liability", Value = "Liability"}
+               }, "Select", new { @class = "form-control" })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.MainCategory)
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Create" class="btn btn-default" />
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="panel-footer">
+                <div>@ViewBag.Msg</div>
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

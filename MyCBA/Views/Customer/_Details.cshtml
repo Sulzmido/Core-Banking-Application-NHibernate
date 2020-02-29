@@ -1,0 +1,58 @@
+﻿@model MyCBA.Core.Models.Customer
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h4 class="modal-title" id="myModalLabel">Customer Details</h4>
+</div>
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            Customer ID
+        </dt>
+        <dd>
+            @Model.CustId
+        </dd>
+        <dt>
+            Full Name
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FullName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Gender)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Gender)
+        </dd>
+        <dt>
+            Phone Number
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+        @*<dt>
+                Number of Accounts
+            </dt>
+
+            @{
+                int count = new MyCBA.Data.Repositories.CustomerAccountRepository().GetAll().Where(a => a.CustId.Equals(Model.CustId)).Count();
+                <dd>
+                @count
+            </dd>
+            }*@
+
+    </dl>
+</div>
+
+

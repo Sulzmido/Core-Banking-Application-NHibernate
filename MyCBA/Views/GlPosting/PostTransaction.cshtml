@@ -1,0 +1,101 @@
+﻿@model MyCBA.Core.ViewModels.GlPostingViewModels.CreateGlPostViewModel
+@{
+    ViewBag.Title = "PostTransaction";
+}
+<div id="wrapper">
+   @Html.Partial("_SideBarMultiLevelDropdown")
+    <div id="page-wrapper">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Post Transaction
+            </div>
+            <div class="panel-body">
+                @*@using (Html.BeginForm())*@
+                @using (Ajax.BeginForm("PostTransaction", "GlPosting", new AjaxOptions { Confirm = "Are you sure you want to post this transaction?", HttpMethod = "post", UpdateTargetId = "resultDiv", LoadingElementId = "loadingDiv", OnSuccess = "clearForm()" }, new { @id = "postForm" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                        <h4>GlPosting</h4>
+                        <hr />
+                        @Html.ValidationSummary(true)
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.DrGlAccount_Id, "Account to Debit", new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownList("DrGlAccount_Id", null, "Select", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.DrGlAccount_Id)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CrGlAccount_Id, "Account to Credit", new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownList("CrGlAccount_Id", null, "Select", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.CrGlAccount_Id)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CreditAmount, new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(model => model.CreditAmount, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.CreditAmount)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.DebitAmount, new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(model => model.DebitAmount, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.DebitAmount)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Naration, new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(model => model.Naration, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Naration)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input id="btnSubmit" type="submit" value="Post" class="btn btn-default btn-block" />
+                            </div>
+                        </div>
+                        @ViewBag.ErrorMessage
+                    </div>
+                }
+            </div>
+            <div id="resultDiv">
+            </div>
+            <div class="panel-footer">
+                <div id="loadingDiv" style="display:none">
+                    Posting...
+                </div>
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script type="text/javascript">
+    function clearForm() {
+        document.getElementById("postForm").reset();
+    }
+
+    $("#btnSubmit").on("click", function (e) {
+        if ($("#DrGlAccount_Id").val() == $("#CrGlAccount_Id").val()) {
+            alert("Please select different account");
+            e.preventDefault();
+        }
+
+        if ($("#CreditAmount").val() != $("#DebitAmount").val()) {
+            alert("Credit and Debit amount must be equal");
+            e.preventDefault();
+        }
+
+        if ($("#CreditAmount").val() == "" || isNaN($("#CreditAmount").val()) || isNaN($("#DebitAmount").val()) || $("#DebitAmount").val() == "" || $("#DrGlAccount_Id").val() == "" || $("#CrGlAccount_Id").val() == "") {
+            alert("Please fill in the required fields with appropriate data");
+            e.preventDefault();
+        }
+    })
+</script>

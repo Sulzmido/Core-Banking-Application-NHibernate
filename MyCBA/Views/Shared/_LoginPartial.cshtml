@@ -1,0 +1,25 @@
+﻿
+@if (!String.IsNullOrEmpty((String)Session["username"]))
+{
+    using (Html.BeginForm("LogOut", "Usermanager", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                @Html.ActionLink("Hello " + (String)Session["username"] + " !", "Index","Home")
+            </li>
+            <li>
+                @Html.ActionLink("Change Password", "ChangePassword", "Usermanager")
+            </li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()"><i class="fa fa-sign-out fa-fw"></i>Logoff</a></li>
+        </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("Add User", "Create", "Usermanager", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("Log in", "Login", "Usermanager", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
+}

@@ -1,0 +1,60 @@
+﻿@model IEnumerable<MyCBA.Core.Models.Branch>
+@{
+    ViewBag.Title = "Index";
+}
+
+<div id="wrapper">
+    @Html.Partial("_SideBarMultiLevelDropdown")
+    <div id="page-wrapper">
+        <h3>Branch List</h3>
+        <p>
+            @Html.ActionLink("Create New", "Create")
+        </p>
+        <table class="table table-bordered">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Address)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SortCode)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+                <th></th>
+                <th></th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Address)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SortCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    @if (item.Status == MyCBA.Core.Models.BranchStatus.Closed)
+                    {
+                        <td>@Html.ActionLink("Open", "OpenOrCloseBranch", new { id = item.ID })</td>
+                    }
+                    else
+                    {
+                        <td>@Html.ActionLink("Close", "OpenOrCloseBranch", new { id = item.ID }, new { @class = "text-danger" })</td>
+                    }
+                    <td>
+                        @Html.ActionLink("Edit", "EditBranch", new { id = item.ID })
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

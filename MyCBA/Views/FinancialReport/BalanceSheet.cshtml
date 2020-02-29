@@ -1,0 +1,97 @@
+﻿@{
+    ViewBag.Title = "BalanceSheet";
+}
+<div id="wrapper">
+    <!-- Navigation -->
+    @Html.Partial("_SideBarMultiLevelDropdown") 
+    <div id="page-wrapper">
+        <h2 class="text-center" style="color:lightblue">Balance Sheet</h2>
+        <table class="table table-bordered">
+            <tr>
+                <th>
+                    Account
+                </th>
+                <th>
+                    Amount
+                </th>
+            </tr>
+            <tr>
+                <td style="background-color:lightblue"><b style="color:white">Asset</b></td>
+                <td style="background-color:lightblue"><b style="color:white">N</b></td>
+            </tr>
+            @foreach (var item in ViewBag.Assets as List<MyCBA.Core.Models.GlAccount>)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AccountName)
+                    </td>
+                    <td>
+                        @item.AccountBalance.ToString("N2", System.Globalization.CultureInfo.InvariantCulture)
+                    </td>
+                </tr>
+            }
+            <tr>
+                <th>Total</th>
+                <th>@ViewBag.AssetSum.ToString("N2", System.Globalization.CultureInfo.InvariantCulture)</th>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td style="background-color:lightblue"><b style="color:white">Capital</b></td>
+                <td style="background-color:lightblue"><b style="color:white">N</b></td>
+            </tr>
+            @foreach (var item in ViewBag.Capitals as List<MyCBA.Core.Models.GlAccount>)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AccountName)
+                    </td>
+                    <td>
+                        @item.AccountBalance.ToString("N2", System.Globalization.CultureInfo.InvariantCulture)
+                    </td>
+                </tr>
+            }
+            <tr>
+                <th>Total</th>
+                <th>
+                    @ViewBag.CapitalSum.ToString("N2", System.Globalization.CultureInfo.InvariantCulture)
+                </th>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td style="background-color:lightblue"><b style="color:white">Liability</b></td>
+                <td style="background-color:lightblue"><b style="color:white">N</b></td>
+            </tr>
+            @*@if (ViewBag.Capitals != null)
+                {
+
+                }*@
+            @foreach (var item in ViewBag.Liability as List<MyCBA.Core.ViewModels.FinancialReportViewModel.LiabilityViewModel>)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AccountName)
+                    </td>
+                    <td>
+                        @item.Amount.ToString("N2", System.Globalization.CultureInfo.InvariantCulture)
+                    </td>
+                </tr>
+            }
+            <tr>
+                <th>Total</th>
+                @{
+                    decimal ltotal = (decimal)ViewBag.LiabilitySum;
+                    <th>@ltotal.ToString("N2", System.Globalization.CultureInfo.InvariantCulture)</th>
+                }
+            </tr>
+            <tr><th></th></tr>
+            <tr>
+                <th>Capital + Liability</th>
+                @{
+                    decimal total = (decimal)ViewBag.CapitalSum + (decimal)ViewBag.LiabilitySum;
+                    <th>@total.ToString("N2", System.Globalization.CultureInfo.InvariantCulture)</th>
+                }
+                @*<th>@((decimal)ViewBag.CapitalSum + (decimal)ViewBag.LiabilitySum)</th>*@
+            </tr>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,51 @@
+﻿@model MyCBA.Core.Models.TillToUser
+@{
+    ViewBag.Title = "AssignTillToUser";
+}
+<div id="wrapper">
+     @Html.Partial("_SideBarMultiLevelDropdown")
+    <div id="page-wrapper">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Assign Till To User
+            </div>
+            <div class="panel-body">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                        <br />
+                        @Html.ValidationSummary(true)
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.UserId, new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownList("UserId", null, "Select", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.UserId)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.TillId, new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownList("TillId", null, "Select", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.TillId)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Assign" class="btn btn-default" />
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="panel-footer">
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        </div>
+
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

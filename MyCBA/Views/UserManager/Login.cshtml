@@ -1,0 +1,59 @@
+﻿@model MyCBA.Core.ViewModels.UserViewModels.LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+}
+
+<div id="wrapper">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            @using (Html.BeginForm("Login", "UserManager", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="login-panel panel panel-default">
+                    <div class="panel-heading">
+                        @if (ViewBag.accessMsg == null)
+                        {
+                            <h3 class="panel-title"> Please login</h3>
+                        }
+                        else
+                        {
+                            <h3 class="panel-title"> @ViewBag.accessMsg</h3>
+                        }
+                    </div>
+                    <div class="panel-body">
+                        <fieldset>
+                            @Html.ValidationSummary(true)
+                            <div class="form-group">
+                                @*@Html.EditorFor(m => m.Username)*@
+                                @Html.TextBoxFor(m => m.Username, new { @class = "form-control", @placeholder = "Username" })
+                                @Html.ValidationMessageFor(m => m.Username)
+                            </div>
+                            <div class="form-group">
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password", @name = "password" })
+                                @Html.ValidationMessageFor(m => m.Password)
+                            </div>
+                            @*
+                            <div class="checkbox">
+                                <label>
+                                    @Html.CheckBoxFor(m => m.RememberMe)
+                                    @Html.LabelFor(m => m.RememberMe)
+                                </label>
+                            </div>
+                            *@
+                            <br />
+                            <div class="form-group"><input type="submit" value="Log in" class="btn btn-lg btn-success btn-block" /></div>
+                        </fieldset>
+                    </div>
+                </div>
+                @ViewBag.Msg
+                <p>
+                    @Html.ActionLink("Forgot your password?", "ForgotPassword")
+                </p>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,43 @@
+﻿
+
+@model MyCBA.Core.Models.GlAccount
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h4 class="modal-title" id="myModalLabel">Account Details</h4>
+</div>
+<div>
+    <br />
+    <dl class="dl-horizontal">
+        <dt>
+            Branch
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Branch.Name)
+        </dd>
+        <dt>
+            Category
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.GlCategory.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AccountName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AccountName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CodeNumber)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CodeNumber)
+        </dd>
+        <dt>
+            Account Balance
+        </dt>
+        <dd>
+            N @Model.AccountBalance.ToString("N02")
+        </dd>
+    </dl>
+</div>

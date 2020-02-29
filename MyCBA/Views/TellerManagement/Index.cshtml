@@ -1,0 +1,47 @@
+﻿@model IEnumerable<MyCBA.Core.Models.TillToUser>
+@{
+    ViewBag.Title = "Index";
+}
+<div id="wrapper">
+    @Html.Partial("_SideBarMultiLevelDropdown")
+    <div id="page-wrapper">
+        <h2>List of Tellers</h2>
+        <p>
+            @Html.ActionLink("Assign Till to User", "AssignTillToUser")
+        </p>
+        <table class="table table-bordered">
+            <tr>
+                <th>
+                    User
+                </th>
+                <th>
+                    Till Account
+                </th>
+                <th>Account Balance</th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    @{ string username = new MyCBA.Data.Repositories.UserRepository().GetById(item.UserId).Username;
+                        <td>@username</td>
+                    }
+                    @{ MyCBA.Core.Models.GlAccount till = new MyCBA.Data.Repositories.GlAccountRepository().GetById(item.TillId);
+                        if (till == null)
+                        {
+                            <td>Nil</td>
+                            <td>Nil</td>
+                        }
+                        else
+                        {
+                            <td>@till.AccountName</td>
+                            <td>N @till.AccountBalance.ToString("N02")</td>
+                        }
+
+
+
+                    }
+                </tr>
+                        }
+        </table>
+    </div>
+</div>

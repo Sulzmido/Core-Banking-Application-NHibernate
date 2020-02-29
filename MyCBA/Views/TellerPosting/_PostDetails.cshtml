@@ -1,0 +1,67 @@
+﻿
+@model MyCBA.Core.Models.TellerPosting
+
+
+<div class="col-lg-12">
+    @Html.ActionLink("Select another account", "Post")
+    <br />
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            You are posting to: @Model.CustomerAccount.AccountNumber (@Model.CustomerAccount.AccountName) Balance: N @Model.CustomerAccount.AccountBalance.ToString("N2", System.Globalization.CultureInfo.InvariantCulture)
+        </div>
+        <div class="panel-body">
+            @*@using (Html.BeginForm("PostTransaction", "TellerPosting", FormMethod.Post))*@
+            @using (Ajax.BeginForm("PostTransaction", "TellerPosting", new AjaxOptions { HttpMethod = "post", UpdateTargetId = "resultDiv", Confirm = "Sure to proceed?", LoadingElementId = "loadingDiv", OnSuccess = "clearForm()" }, new { @id = "postForm" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true)
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Amount, new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.Amount, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Amount)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Narration, new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.Narration, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Narration)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PostingType, new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("PostingType", new List<SelectListItem>()
+                {
+                    new SelectListItem{Text ="Deposit", Value="Deposit"},
+                    new SelectListItem{Text ="Withdrawal", Value="Withdrawal"}
+                }, "Select", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.PostingType)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            @*@Ajax.ActionLink("Save Posting", "PostTransaction", "TellerPosting", new {model = Model }, new AjaxOptions { Confirm = "Confirm Posting?", UpdateTargetId = "resultDiv", HttpMethod = "post" }, new { @class = "btn btn-default btn-block" })*@
+                            <input type="submit" id="btnSubmit" name="btnSubmit" value="Post" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
+            }
+            <div id="loadingDiv" style="display:none">
+                Posting...
+            </div>
+        </div>
+        <div class="panel-footer" id="resultDiv">
+        </div>
+    </div>
+</div>
+<!-- /.col-lg-4 -->
+<script type="text/javascript">
+    function clearForm() {
+        document.getElementById("postForm").reset();
+    }
+</script>

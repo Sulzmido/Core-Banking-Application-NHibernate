@@ -1,0 +1,93 @@
+﻿@model MyCBA.Core.Models.Customer
+@{
+    ViewBag.Title = "Create";
+}
+<div id="loading" style="display:none; background-color:yellow">
+    Creating...
+</div>
+<hr />
+<div id="wrapper">
+      @Html.Partial("_SideBarMultiLevelDropdown") 
+    <div id="page-wrapper">
+        <div class="col-lg-12">
+            <div class="col-lg-10">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        Add Customer
+                    </div>
+                    <div class="panel-body">
+
+                        @using (Html.BeginForm("Create", "Customer"))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="form-horizontal">
+                                @Html.ValidationSummary(true)
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.FullName, new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.TextBoxFor(model => model.FullName, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.FullName)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Address, new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.TextBoxFor(model => model.Address, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.Address)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Email, new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @type = "email" })
+                                        @Html.ValidationMessageFor(model => model.Email)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.PhoneNumber, new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.TextBoxFor(model => model.PhoneNumber, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.PhoneNumber)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Gender, new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.DropDownList("Gender", new List<SelectListItem>
+                       {
+                           new SelectListItem{Text = "Male", Value="Male"},
+                           new SelectListItem{Text = "Female", Value="Female"}
+                       }, "Select Gender", new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.Gender)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <input id="btnSubmit" type="submit" value="Create" class="btn btn-default" />
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        <div class="panel-footer">
+                            <div>
+                                <label class="text-info">@ViewBag.Msg</label>
+                            </div>
+                            @Html.ActionLink("Back to List", "Index")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script>
+    function beginRequest() {
+        $("#btnSubmit").disabled;
+    }
+    function endRequest(request, status) {
+        $("#btnSubmit").enabled;
+    }
+</script>
